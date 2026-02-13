@@ -59,8 +59,21 @@ async function assignShift(empId, shiftId) {
         return "Employee already assigned to shift";
     }
 
-    await persistence.addAssignment(empId, shiftId);
-    return "Ok";
+    // Get shift duration
+let duration = computeShiftDuration(shift.startTime, shift.endTime);
+
+// Read config
+const fs = require('fs/promises');
+let rawConfig = await fs.readFile('config.json');
+let config = JSON.parse(rawConfig);
+
+if (duration > config.maxDailyHours) {
+    return "Shift exceeds maximum daily hours limit";
+}
+
+await persistence.addAssignment(empId, shiftId);
+return "Ok";
+
 }
 
 /**
