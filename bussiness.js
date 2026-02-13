@@ -1,6 +1,27 @@
 const persistence = require('./persistence');
 
 /**
+ * computeShiftDuration
+ * Generated using ChatGPT (LLM)
+ * Prompt used:
+ * "Write a JavaScript function computeShiftDuration(startTime, endTime)
+ * that takes times in HH:MM format and returns hours as a decimal number."
+ *
+ * @param {string} startTime
+ * @param {string} endTime
+ * @returns {number}
+ */
+function computeShiftDuration(startTime, endTime) {
+    const [startHour, startMinute] = startTime.split(':').map(Number);
+    const [endHour, endMinute] = endTime.split(':').map(Number);
+
+    const startTotal = startHour * 60 + startMinute;
+    const endTotal = endHour * 60 + endMinute;
+
+    return (endTotal - startTotal) / 60;
+}
+
+/**
  * Get all employees
  */
 async function getAllEmployees() {
